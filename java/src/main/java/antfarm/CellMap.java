@@ -98,6 +98,10 @@ public class CellMap implements Simulator {
     } while (value == high);
     return value;
   }
+  //spawns a new ant at the nest food was returned too
+  void spawnAnt(Pair p){
+    ants.add(new Ant2(p.x,p.y));
+  }
 
   void antNavigation() {
     lock.lock();
@@ -106,7 +110,11 @@ public class CellMap implements Simulator {
         pair = ants.get(i).getCoords();
         // pheromoneChange(pair.x, pair.y, 3);
         velocity = ants.get(i).getVelocity();
-        if (ants.get(i).food) {
+        if(ants.get(i).food && map[ants.get(i).coordinates.x][ants.get(i).coordinates.x].nest){
+          ants.get(i).food = false;
+          spawnAnt(ants.get(i).coordinates);
+        }
+        else if (ants.get(i).food) {
           ants.get(i).move();
           pair = ants.get(i).getCoords();
           foodPheroChange(pair.x, pair.y);

@@ -44,7 +44,9 @@ public class Run extends PApplet {
 
   @Override
   public void draw() {
+    
     sim.drawMap(this.g);
+    //sim.antNavigation();
   }
 
   @Override

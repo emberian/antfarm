@@ -3,7 +3,7 @@ package antfarm;
 public class Cell {
 
   public float pheromone, foodPheromone, foodCount;
-  public boolean food, terrain;
+  public boolean food, terrain, nest;
   public Pair location;
 
   Cell(Cell cell2) {
@@ -31,9 +31,13 @@ public class Cell {
     this.food = food;
     this.foodCount = foodCount;
   }
+  Cell(int x, int y, boolean path){
+    location = new Pair(x,y);
+    this.nest = nest;
+  }
 
   float getValue() {
-    return pheromone + 4 * foodPheromone + 5;
+    return pheromone + 4 * foodPheromone + 5 + ((food) ? 60 : 0) ;
   }
 
   Pair getLocation() {
