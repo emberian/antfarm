@@ -31,13 +31,16 @@ public class Cell {
     this.food = food;
     this.foodCount = foodCount;
   }
-  Cell(int x, int y, boolean path){
+  Cell(int x, int y, boolean nest){
     location = new Pair(x,y);
     this.nest = nest;
   }
 
   float getValue() {
-    return pheromone + 4 * foodPheromone + 5 + ((food) ? 60 : 0) ;
+    float tempVal = 5+ foodPheromone + pheromone + ((food) ? 150 : 0) ;
+    if(tempVal < 0.1)
+      tempVal = 1;
+    return tempVal;
   }
 
   Pair getLocation() {

@@ -68,7 +68,17 @@ public class Ant2 {
     coordinates.y = (boundsCheck(coordinates.y, y)) ? coordinates.y + y : coordinates.y - y;
     velocity.x = (boundsCheck(coordinates.x, x)) ? x : -x;
     velocity.y = (boundsCheck(coordinates.y, y)) ? y : -y;
-    paths.add(new Pair(coordinates));
+    if(paths.indexOf(coordinates)>-1){
+      int tempCoord = paths.indexOf(coordinates);
+
+      for(int k = paths.size()-1; k > tempCoord-1 ; k--){
+        paths.remove(k);
+      }
+      paths.add(new Pair(coordinates));
+    }
+    else
+      paths.add(new Pair(coordinates));
+
   }
 
   void draw(processing.core.PGraphics g) {

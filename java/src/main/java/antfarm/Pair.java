@@ -13,8 +13,14 @@ public class Pair {
     this.x = p.x;
     this.y = p.y;
   }
-
-  
+@Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Pair) {
+      Pair other = (Pair)obj;
+      return other.x == this.x && other.y == this.y;
+    }
+    return false;
+  }
   @Override
   public String toString() {
     return Integer.toString(x) + Integer.toString(y);

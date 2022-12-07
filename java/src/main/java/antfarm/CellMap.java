@@ -24,14 +24,20 @@ public class CellMap implements Simulator {
     map = new Cell[(width - 2) / pixelsPerCell][(height - 2) / pixelsPerCell];
     totalX = (width - 2) / pixelsPerCell;
     totalY = (height - 2) / pixelsPerCell;
-    System.out.println(width);
-    for (int i = 0; i < (width - 2) / pixelsPerCell; i++) {
-      for (int j = 0; j < (height - 2) / pixelsPerCell; j++) {
+    
+    for (int i = 0; i < totalX; i++) {
+      for (int j = 0; j < totalY; j++) {
         if (i > 8 && i < 15 && j > 8 && j < 15) {
           map[i][j] = new Cell(i, j, true, 100);
-        } else {
+        } 
+        else if(i>48 && i < 52  && j>48 && j < 52){
+          map[i][j] = new Cell(i, j, true);
+          System.out.println("Home made");
+        }
+        else {
           map[i][j] = new Cell(i, j);
         }
+        
       }
     }
     for (int k = 0; k < antCount; k++) {
@@ -40,14 +46,17 @@ public class CellMap implements Simulator {
   }
 
   void drawMap(PGraphics g) {
+    System.out.println(ants.size());
     for (int i = 0; i < totalX; i++) {
       for (int j = 0; j < totalY; j++) {
         // noStroke();
-        g.fill(255 - (3 * map[i][j].pheromone));
+        g.fill(255 - (3 * map[i][j].foodPheromone));
         if (map[i][j].food)
           g.fill(200, 50, 50);
-        if (map[i][j].foodPheromone != 0)
-          g.fill(100, 60);
+        if (map[i][j].nest)
+          g.fill(30, 175, 50);
+        // if (map[i][j].foodPheromone != 0)
+        //   g.fill(100, 60);
         pheromoneDecay(i, j);
         g.square((float) i * pixelsPerCell, (float) j * pixelsPerCell, (float) pixelsPerCell);
       }
@@ -63,11 +72,13 @@ public class CellMap implements Simulator {
   }
 
   void foodPheroChange(int x, int y) {
-    map[x][y].foodPheromone = map[x][y].foodPheromone + 10;
+    map[x][y].foodPheromone = map[x][y].foodPheromone + 55;
   }
 
   void pheromoneDecay(int x, int y) {
     map[x][y].pheromone = (float) (map[x][y].pheromone - .001);
+    if(map[x][y].foodPheromone > 0)
+      map[x][y].foodPheromone = map[x][y].foodPheromone - .025f ;
   }
 
   float random(float high) {
@@ -110,7 +121,8 @@ public class CellMap implements Simulator {
         pair = ants.get(i).getCoords();
         // pheromoneChange(pair.x, pair.y, 3);
         velocity = ants.get(i).getVelocity();
-        if(ants.get(i).food && map[ants.get(i).coordinates.x][ants.get(i).coordinates.x].nest){
+        if(ants.get(i).food && map[ants.get(i).coordinates.x][ants.get(i).coordinates.y].nest){
+          System.out.println("GOT 2 NEST");
           ants.get(i).food = false;
           spawnAnt(ants.get(i).coordinates);
         }
@@ -166,10 +178,10 @@ public class CellMap implements Simulator {
           for (int l = 0; l < moveCells.size(); l++) {
             tally += moveCells.get(l).getValue();
             if (tally >= randomRange || l == moveCells.size()) {
-              if (moveCells.get(l).getLocation().x > totalX - 22)
+              if (moveCells.get(l).getLocation().x > totalX - 1)
                 moveCells.get(l).getLocation().x = pair.x;
 
-              if (moveCells.get(l).getLocation().y > totalY - 22)
+              if (moveCells.get(l).getLocation().y > totalY - 1)
                 moveCells.get(l).getLocation().y = pair.y;
 
               // println(pair.x - moveCells.get(l).getLocation().x, pair.y -
