@@ -63,7 +63,7 @@ public class UnityConnector {
                 m.writeValue(os, sim.currentState());
                 break;
               case "/next_sim_frame":
-              System.out.println("nextsim");
+                System.out.println("nextsim");
 
                 try {
                   m.writeValue(os, sim.nextFrame());
@@ -74,7 +74,7 @@ public class UnityConnector {
                 }
                 break;
               case "/action":
-              System.out.println("action");
+                System.out.println("action");
 
                 Action a = m.readValue(new ByteArrayInputStream(body), Action.class);
                 m.writeValue(os, sim.doAction(a));
