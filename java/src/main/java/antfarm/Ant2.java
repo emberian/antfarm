@@ -24,7 +24,7 @@ public class Ant2 {
     food = ant2.food;
     trailBlazer = ant2.trailBlazer;
 
-    coords = ant2.coords.clone();
+    coordinates = new Pair(ant2.coordinates);
     xRange = new Pair(xRange);
     paths = new ArrayList<>();
     for (Pair p : paths) {
@@ -36,7 +36,6 @@ public class Ant2 {
   public Ant2(int x, int y) {
     id = antCounter.next();
     paths = new ArrayList<>();
-    coords = new int[2];
     coordinates = new Pair(x, y);
     paths.add(coordinates);
     trailBlazer = false;

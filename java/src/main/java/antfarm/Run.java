@@ -46,11 +46,11 @@ public class Run extends PApplet {
   public void draw() {
     
     sim.drawMap(this.g);
-    sim.antNavigation();
+    //sim.antNavigation();
   }
 
   @Override
   public void mousePressed() {
-    //sim.antNavigation();
+    sim.antNavigation();
   }
 }
