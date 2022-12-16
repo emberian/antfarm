@@ -57,7 +57,6 @@ public class CellMap implements Simulator {
           g.fill(30, 175, 50);
         // if (map[i][j].foodPheromone != 0)
         //   g.fill(100, 60);
-        pheromoneDecay(i, j);
         g.square((float) i * pixelsPerCell, (float) j * pixelsPerCell, (float) pixelsPerCell);
       }
     }
@@ -196,6 +195,11 @@ public class CellMap implements Simulator {
               break;
             }
           }
+        }
+      }
+      for (int i = 0; i < totalX; i++) {
+        for (int j = 0; j < totalY; j++) {
+          pheromoneDecay(i, j);
         }
       }
       simSteps.next();
